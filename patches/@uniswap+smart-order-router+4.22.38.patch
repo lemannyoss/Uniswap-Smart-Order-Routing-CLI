@@ -1,0 +1,92 @@
+diff --git a/node_modules/@uniswap/smart-order-router/build/main/providers/caching-subgraph-provider.js b/node_modules/@uniswap/smart-order-router/build/main/providers/caching-subgraph-provider.js
+index 442544d..a3f8fc6 100644
+--- a/node_modules/@uniswap/smart-order-router/build/main/providers/caching-subgraph-provider.js
++++ b/node_modules/@uniswap/smart-order-router/build/main/providers/caching-subgraph-provider.js
+@@ -79,6 +79,7 @@ exports.BASES_TO_CHECK_TRADES_AGAINST = {
+         (0, util_1.nativeOnChain)(sdk_core_1.ChainId.BASE),
+         util_1.WRAPPED_NATIVE_CURRENCY[sdk_core_1.ChainId.BASE],
+         token_provider_1.USDC_BASE,
++        token_provider_1.VIRTUAL_BASE,
+     ],
+     [sdk_core_1.ChainId.ZORA]: [
+         (0, util_1.nativeOnChain)(sdk_core_1.ChainId.ZORA),
+diff --git a/node_modules/@uniswap/smart-order-router/build/main/providers/token-provider.js b/node_modules/@uniswap/smart-order-router/build/main/providers/token-provider.js
+index c5c7de7..48a8522 100644
+--- a/node_modules/@uniswap/smart-order-router/build/main/providers/token-provider.js
++++ b/node_modules/@uniswap/smart-order-router/build/main/providers/token-provider.js
+@@ -100,6 +100,7 @@ exports.USDC_NATIVE_AVAX = new sdk_core_1.Token(sdk_core_1.ChainId.AVALANCHE, '0
+ exports.USDC_BASE = new sdk_core_1.Token(sdk_core_1.ChainId.BASE, '0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA', 6, 'USDbC', 'USD Base Coin');
+ exports.USDC_NATIVE_BASE = new sdk_core_1.Token(sdk_core_1.ChainId.BASE, '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913', 6, 'USDbC', 'USD Base Coin');
+ exports.VIRTUAL_BASE = new sdk_core_1.Token(sdk_core_1.ChainId.BASE, '0x0b3e328455c4059EEb9e3f84b5543F74E24e7E1b', 18, 'VIRTUAL', 'Virtual Protocol');
++exports.WETH_BASE = new sdk_core_1.Token(sdk_core_1.ChainId.BASE, '0x4200000000000000000000000000000000000006', 18, 'WETH', 'Wrapped Ether');
+ // Base Goerli Tokens
+ exports.USDC_BASE_GOERLI = new sdk_core_1.Token(sdk_core_1.ChainId.BASE_GOERLI, '0x853154e2A5604E5C74a2546E2871Ad44932eB92C', 6, 'USDbC', 'USD Base Coin');
+ // Gnosis Tokens
+diff --git a/node_modules/@uniswap/smart-order-router/build/main/providers/v2/static-subgraph-provider.js b/node_modules/@uniswap/smart-order-router/build/main/providers/v2/static-subgraph-provider.js
+index 161d2b7..a0d5d4e 100644
+--- a/node_modules/@uniswap/smart-order-router/build/main/providers/v2/static-subgraph-provider.js
++++ b/node_modules/@uniswap/smart-order-router/build/main/providers/v2/static-subgraph-provider.js
+@@ -69,7 +69,7 @@ const BASES_TO_CHECK_TRADES_AGAINST = {
+         token_provider_1.DAI_AVAX,
+     ],
+     [sdk_core_1.ChainId.BASE_GOERLI]: [],
+-    [sdk_core_1.ChainId.BASE]: [chains_1.WRAPPED_NATIVE_CURRENCY[sdk_core_1.ChainId.BASE], token_provider_1.USDC_BASE],
++    [sdk_core_1.ChainId.BASE]: [chains_1.WRAPPED_NATIVE_CURRENCY[sdk_core_1.ChainId.BASE], token_provider_1.USDC_BASE, token_provider_1.VIRTUAL_BASE],
+     [sdk_core_1.ChainId.ZORA]: [chains_1.WRAPPED_NATIVE_CURRENCY[sdk_core_1.ChainId.ZORA]],
+     [sdk_core_1.ChainId.ZORA_SEPOLIA]: [chains_1.WRAPPED_NATIVE_CURRENCY[sdk_core_1.ChainId.ZORA_SEPOLIA]],
+     [sdk_core_1.ChainId.ROOTSTOCK]: [chains_1.WRAPPED_NATIVE_CURRENCY[sdk_core_1.ChainId.ROOTSTOCK]],
+diff --git a/node_modules/@uniswap/smart-order-router/build/main/providers/v3/static-subgraph-provider.js b/node_modules/@uniswap/smart-order-router/build/main/providers/v3/static-subgraph-provider.js
+index 4ea87b9..deecb95 100644
+--- a/node_modules/@uniswap/smart-order-router/build/main/providers/v3/static-subgraph-provider.js
++++ b/node_modules/@uniswap/smart-order-router/build/main/providers/v3/static-subgraph-provider.js
+@@ -104,7 +104,7 @@ const BASES_TO_CHECK_TRADES_AGAINST = {
+         token_provider_1.WBTC_MOONBEAM,
+     ],
+     [sdk_core_1.ChainId.BASE_GOERLI]: [chains_1.WRAPPED_NATIVE_CURRENCY[sdk_core_1.ChainId.BASE_GOERLI]],
+-    [sdk_core_1.ChainId.BASE]: [chains_1.WRAPPED_NATIVE_CURRENCY[sdk_core_1.ChainId.BASE], token_provider_1.USDC_BASE],
++    [sdk_core_1.ChainId.BASE]: [chains_1.WRAPPED_NATIVE_CURRENCY[sdk_core_1.ChainId.BASE], token_provider_1.USDC_BASE, token_provider_1.VIRTUAL_BASE],
+     [sdk_core_1.ChainId.ZORA]: [chains_1.WRAPPED_NATIVE_CURRENCY[sdk_core_1.ChainId.ZORA]],
+     [sdk_core_1.ChainId.ZORA_SEPOLIA]: [chains_1.WRAPPED_NATIVE_CURRENCY[sdk_core_1.ChainId.ZORA_SEPOLIA]],
+     [sdk_core_1.ChainId.ROOTSTOCK]: [chains_1.WRAPPED_NATIVE_CURRENCY[sdk_core_1.ChainId.ROOTSTOCK]],
+diff --git a/node_modules/@uniswap/smart-order-router/build/main/routers/alpha-router/config.js b/node_modules/@uniswap/smart-order-router/build/main/routers/alpha-router/config.js
+index c1a8afe..d10e49d 100644
+--- a/node_modules/@uniswap/smart-order-router/build/main/routers/alpha-router/config.js
++++ b/node_modules/@uniswap/smart-order-router/build/main/routers/alpha-router/config.js
+@@ -44,9 +44,9 @@ const DEFAULT_ROUTING_CONFIG_BY_CHAIN = (chainId) => {
+                     topNWithEachBaseToken: 3,
+                     topNWithBaseToken: 3,
+                 },
+-                maxSwapsPerPath: 3,
++                maxSwapsPerPath: 10,
+                 minSplits: 1,
+-                maxSplits: 7,
++                maxSplits: 10,
+                 distributionPercent: 10,
+                 forceCrossProtocol: false,
+             };
+diff --git a/node_modules/@uniswap/smart-order-router/build/main/routers/alpha-router/functions/get-candidate-pools.js b/node_modules/@uniswap/smart-order-router/build/main/routers/alpha-router/functions/get-candidate-pools.js
+index d73915b..0087536 100644
+--- a/node_modules/@uniswap/smart-order-router/build/main/routers/alpha-router/functions/get-candidate-pools.js
++++ b/node_modules/@uniswap/smart-order-router/build/main/routers/alpha-router/functions/get-candidate-pools.js
+@@ -69,7 +69,7 @@ const baseTokensByChain = {
+     ],
+     [sdk_core_1.ChainId.BNB]: [token_provider_1.DAI_BNB, token_provider_1.USDC_BNB, token_provider_1.USDT_BNB],
+     [sdk_core_1.ChainId.AVALANCHE]: [token_provider_1.DAI_AVAX, token_provider_1.USDC_AVAX],
+-    [sdk_core_1.ChainId.BASE]: [token_provider_1.USDC_BASE],
++    [sdk_core_1.ChainId.BASE]: [token_provider_1.USDC_BASE, token_provider_1.VIRTUAL_BASE, token_provider_1.WETH_BASE],
+     [sdk_core_1.ChainId.BLAST]: [util_1.WRAPPED_NATIVE_CURRENCY[sdk_core_1.ChainId.BLAST], token_provider_1.USDB_BLAST],
+     [sdk_core_1.ChainId.ZORA]: [util_1.WRAPPED_NATIVE_CURRENCY[sdk_core_1.ChainId.ZORA]],
+     [sdk_core_1.ChainId.ZKSYNC]: [util_1.WRAPPED_NATIVE_CURRENCY[sdk_core_1.ChainId.ZKSYNC]],
+diff --git a/node_modules/@uniswap/smart-order-router/build/main/routers/legacy-router/bases.js b/node_modules/@uniswap/smart-order-router/build/main/routers/legacy-router/bases.js
+index aa3b362..86ad3e7 100644
+--- a/node_modules/@uniswap/smart-order-router/build/main/routers/legacy-router/bases.js
++++ b/node_modules/@uniswap/smart-order-router/build/main/routers/legacy-router/bases.js
+@@ -49,7 +49,7 @@ const BASES_TO_CHECK_TRADES_AGAINST = (_tokenProvider) => {
+             token_provider_1.USDC_AVAX,
+             token_provider_1.DAI_AVAX,
+         ],
+-        [sdk_core_1.ChainId.BASE]: [chains_1.WRAPPED_NATIVE_CURRENCY[sdk_core_1.ChainId.BASE], token_provider_1.USDC_BASE],
++        [sdk_core_1.ChainId.BASE]: [chains_1.WRAPPED_NATIVE_CURRENCY[sdk_core_1.ChainId.BASE], token_provider_1.USDC_BASE, token_provider_1.VIRTUAL_BASE],
+         [sdk_core_1.ChainId.BASE_GOERLI]: [chains_1.WRAPPED_NATIVE_CURRENCY[sdk_core_1.ChainId.BASE_GOERLI]],
+         [sdk_core_1.ChainId.ZORA]: [chains_1.WRAPPED_NATIVE_CURRENCY[sdk_core_1.ChainId.ZORA]],
+         [sdk_core_1.ChainId.ZORA_SEPOLIA]: [chains_1.WRAPPED_NATIVE_CURRENCY[sdk_core_1.ChainId.ZORA_SEPOLIA]],

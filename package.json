@@ -1,0 +1,23 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "patch-package"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@uniswap/sdk-core": "^7.9.0",
+    "@uniswap/smart-order-router": "^4.22.38",
+    "@uniswap/universal-router-sdk": "^4.23.0",
+    "dotenv": "^17.2.3",
+    "ethers": "^5.8.0"
+  },
+  "devDependencies": {
+    "patch-package": "^8.0.1"
+  }
+}
