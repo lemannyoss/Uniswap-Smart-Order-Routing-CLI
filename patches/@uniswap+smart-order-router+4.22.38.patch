@@ -1,8 +1,16 @@
 diff --git a/node_modules/@uniswap/smart-order-router/build/main/providers/caching-subgraph-provider.js b/node_modules/@uniswap/smart-order-router/build/main/providers/caching-subgraph-provider.js
-index 442544d..a3f8fc6 100644
+index 442544d..68f7469 100644
 --- a/node_modules/@uniswap/smart-order-router/build/main/providers/caching-subgraph-provider.js
 +++ b/node_modules/@uniswap/smart-order-router/build/main/providers/caching-subgraph-provider.js
-@@ -79,6 +79,7 @@ exports.BASES_TO_CHECK_TRADES_AGAINST = {
+@@ -18,6 +18,7 @@ exports.BASES_TO_CHECK_TRADES_AGAINST = {
+     [sdk_core_1.ChainId.SEPOLIA]: [
+         (0, util_1.nativeOnChain)(sdk_core_1.ChainId.SEPOLIA),
+         util_1.WRAPPED_NATIVE_CURRENCY[sdk_core_1.ChainId.SEPOLIA],
++        token_provider_1.SELECT_SEPOLIA,
+     ],
+     //v2 not deployed on [arbitrum, polygon, celo, gnosis, moonbeam, bnb, avalanche] and their testnets
+     [sdk_core_1.ChainId.OPTIMISM]: [
+@@ -79,6 +80,7 @@ exports.BASES_TO_CHECK_TRADES_AGAINST = {
          (0, util_1.nativeOnChain)(sdk_core_1.ChainId.BASE),
          util_1.WRAPPED_NATIVE_CURRENCY[sdk_core_1.ChainId.BASE],
          token_provider_1.USDC_BASE,
@@ -11,10 +19,28 @@ index 442544d..a3f8fc6 100644
      [sdk_core_1.ChainId.ZORA]: [
          (0, util_1.nativeOnChain)(sdk_core_1.ChainId.ZORA),
 diff --git a/node_modules/@uniswap/smart-order-router/build/main/providers/token-provider.js b/node_modules/@uniswap/smart-order-router/build/main/providers/token-provider.js
-index c5c7de7..48a8522 100644
+index c5c7de7..0bbbf99 100644
 --- a/node_modules/@uniswap/smart-order-router/build/main/providers/token-provider.js
 +++ b/node_modules/@uniswap/smart-order-router/build/main/providers/token-provider.js
-@@ -100,6 +100,7 @@ exports.USDC_NATIVE_AVAX = new sdk_core_1.Token(sdk_core_1.ChainId.AVALANCHE, '0
+@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
+ };
+ Object.defineProperty(exports, "__esModule", { value: true });
+ exports.WMATIC_POLYGON_MUMBAI = exports.DAI_BASE_SEPOLIA = exports.DAI_POLYGON = exports.USDC_NATIVE_POLYGON = exports.USDC_POLYGON = exports.WETH_POLYGON = exports.WMATIC_POLYGON = exports.USDC_ARBITRUM_SEPOLIA = exports.USDC_ARBITRUM_GOERLI = exports.DAI_ARBITRUM_SEPOLIA = exports.DAI_ARBITRUM_GOERLI = exports.ARB_ARBITRUM = exports.DAI_ARBITRUM = exports.WBTC_ARBITRUM = exports.USDT_ARBITRUM = exports.USDC_NATIVE_ARBITRUM = exports.USDC_ARBITRUM = exports.DAI_OPTIMISM_SEPOLIA = exports.WBTC_OPTIMISM_SEPOLIA = exports.USDT_OPTIMISM_SEPOLIA = exports.USDC_OPTIMISM_SEPOLIA = exports.DAI_OPTIMISM_GOERLI = exports.WBTC_OPTIMISM_GOERLI = exports.USDT_OPTIMISM_GOERLI = exports.USDC_OPTIMISM_GOERLI = exports.OP_OPTIMISM = exports.DAI_OPTIMISM = exports.WBTC_OPTIMISM = exports.USDT_OPTIMISM = exports.USDC_NATIVE_OPTIMISM = exports.USDC_OPTIMISM = exports.UNI_GOERLI = exports.DAI_GOERLI = exports.WBTC_GOERLI = exports.USDT_GOERLI = exports.USDC_GOERLI = exports.DAI_SEPOLIA = exports.USDC_NATIVE_SEPOLIA = exports.USDC_SEPOLIA = exports.WSTETH_MAINNET = exports.LIDO_MAINNET = exports.AAVE_MAINNET = exports.UNI_MAINNET = exports.FEI_MAINNET = exports.AMPL_MAINNET = exports.EGGS_MAINNET = exports.DAI_MAINNET = exports.WBTC_MAINNET = exports.USDT_MAINNET = exports.USDC_MAINNET = void 0;
+-exports.USDC_SONEIUM = exports.DAI_UNICHAIN = exports.USDC_UNICHAIN = exports.USDC_BASE_SEPOLIA = exports.USDC_UNICHAIN_SEPOLIA = exports.WBTC_WORLDCHAIN = exports.WLD_WORLDCHAIN = exports.USDC_MONAD = exports.USDT_MONAD_TESTNET = exports.USDC_WORLDCHAIN = exports.DAI_ZKSYNC = exports.USDCE_ZKSYNC = exports.USDC_ZKSYNC = exports.USDC_ZORA = exports.USDB_BLAST = exports.WBTC_MOONBEAM = exports.DAI_MOONBEAM = exports.WGLMR_MOONBEAM = exports.USDC_MOONBEAM = exports.WBTC_GNOSIS = exports.WXDAI_GNOSIS = exports.USDC_ETHEREUM_GNOSIS = exports.USDC_BASE_GOERLI = exports.VIRTUAL_BASE = exports.USDC_NATIVE_BASE = exports.USDC_BASE = exports.USDC_NATIVE_AVAX = exports.USDC_BRIDGED_AVAX = exports.USDC_AVAX = exports.DAI_AVAX = exports.CEUR_CELO_ALFAJORES = exports.CUSD_CELO_ALFAJORES = exports.DAI_CELO_ALFAJORES = exports.CELO_ALFAJORES = exports.CEUR_CELO = exports.USDC_NATIVE_CELO = exports.USDC_WORMHOLE_CELO = exports.USDC_CELO = exports.CUSD_CELO = exports.DAI_CELO = exports.CELO = exports.USDT_BNB = exports.USDC_BNB = exports.ETH_BNB = exports.DAI_BNB = exports.BUSD_BNB = exports.BTC_BNB = exports.WETH_POLYGON_MUMBAI = exports.DAI_POLYGON_MUMBAI = exports.USDC_POLYGON_MUMBAI = void 0;
++exports.USDC_SONEIUM = exports.DAI_UNICHAIN = exports.USDC_UNICHAIN = exports.USDC_BASE_SEPOLIA = exports.USDC_UNICHAIN_SEPOLIA = exports.WBTC_WORLDCHAIN = exports.WLD_WORLDCHAIN = exports.USDC_MONAD = exports.USDT_MONAD_TESTNET = exports.USDC_WORLDCHAIN = exports.DAI_ZKSYNC = exports.USDCE_ZKSYNC = exports.USDC_ZKSYNC = exports.USDC_ZORA = exports.USDB_BLAST = exports.WBTC_MOONBEAM = exports.DAI_MOONBEAM = exports.WGLMR_MOONBEAM = exports.USDC_MOONBEAM = exports.WBTC_GNOSIS = exports.WXDAI_GNOSIS = exports.USDC_ETHEREUM_GNOSIS = exports.USDC_BASE_GOERLI = exports.VIRTUAL_BASE = exports.SELECT_SEPOLIA = exports.USDC_NATIVE_BASE = exports.WETH_SEPOLIA = exports.USDC_BASE = exports.USDC_NATIVE_AVAX = exports.USDC_BRIDGED_AVAX = exports.USDC_AVAX = exports.DAI_AVAX = exports.CEUR_CELO_ALFAJORES = exports.CUSD_CELO_ALFAJORES = exports.DAI_CELO_ALFAJORES = exports.CELO_ALFAJORES = exports.CEUR_CELO = exports.USDC_NATIVE_CELO = exports.USDC_WORMHOLE_CELO = exports.USDC_CELO = exports.CUSD_CELO = exports.DAI_CELO = exports.CELO = exports.USDT_BNB = exports.USDC_BNB = exports.ETH_BNB = exports.DAI_BNB = exports.BUSD_BNB = exports.BTC_BNB = exports.WETH_POLYGON_MUMBAI = exports.DAI_POLYGON_MUMBAI = exports.USDC_POLYGON_MUMBAI = void 0;
+ exports.V4_SEPOLIA_TEST_B = exports.V4_SEPOLIA_TEST_A = exports.WNATIVE_ON = exports.USDC_ON = exports.USDT_ON = exports.DAI_ON = exports.TokenProvider = void 0;
+ const abi_1 = require("@ethersproject/abi");
+ const strings_1 = require("@ethersproject/strings");
+@@ -27,6 +27,8 @@ exports.WSTETH_MAINNET = new sdk_core_1.Token(sdk_core_1.ChainId.MAINNET, '0x7f3
+ exports.USDC_SEPOLIA = new sdk_core_1.Token(sdk_core_1.ChainId.SEPOLIA, '0x6f14C02Fc1F78322cFd7d707aB90f18baD3B54f5', 18, 'USDC', 'USDC Token');
+ exports.USDC_NATIVE_SEPOLIA = new sdk_core_1.Token(sdk_core_1.ChainId.SEPOLIA, '0x1c7d4b196cb0c7b01d743fbc6116a902379c7238', 6, 'USDC', 'USDC Token');
+ exports.DAI_SEPOLIA = new sdk_core_1.Token(sdk_core_1.ChainId.SEPOLIA, '0x7AF17A48a6336F7dc1beF9D485139f7B6f4FB5C8', 18, 'DAI', 'DAI Token');
++exports.SELECT_SEPOLIA = new sdk_core_1.Token(sdk_core_1.ChainId.SEPOLIA, '0x121d350bc4af6343f9dcde693b9fc8cef66c261b', 18, 'SELECT', 'SELECT Token');
++exports.WETH_SEPOLIA = new sdk_core_1.Token(sdk_core_1.ChainId.SEPOLIA, '0xfFf9976782d46CC05630D1f6eBAb18b2324d6B14', 18, 'WETH', 'Wrapped Ether');
+ exports.USDC_GOERLI = new sdk_core_1.Token(sdk_core_1.ChainId.GOERLI, '0x07865c6e87b9f70255377e024ace6630c1eaa37f', 6, 'USDC', 'USD//C');
+ exports.USDT_GOERLI = new sdk_core_1.Token(sdk_core_1.ChainId.GOERLI, '0xe583769738b6dd4e7caf8451050d1948be717679', 18, 'USDT', 'Tether USD');
+ exports.WBTC_GOERLI = new sdk_core_1.Token(sdk_core_1.ChainId.GOERLI, '0xa0a5ad2296b38bd3e3eb59aaeaf1589e8d9a29a9', 8, 'WBTC', 'Wrapped BTC');
+@@ -100,6 +102,7 @@ exports.USDC_NATIVE_AVAX = new sdk_core_1.Token(sdk_core_1.ChainId.AVALANCHE, '0
  exports.USDC_BASE = new sdk_core_1.Token(sdk_core_1.ChainId.BASE, '0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA', 6, 'USDbC', 'USD Base Coin');
  exports.USDC_NATIVE_BASE = new sdk_core_1.Token(sdk_core_1.ChainId.BASE, '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913', 6, 'USDbC', 'USD Base Coin');
  exports.VIRTUAL_BASE = new sdk_core_1.Token(sdk_core_1.ChainId.BASE, '0x0b3e328455c4059EEb9e3f84b5543F74E24e7E1b', 18, 'VIRTUAL', 'Virtual Protocol');
@@ -23,9 +49,18 @@ index c5c7de7..48a8522 100644
  exports.USDC_BASE_GOERLI = new sdk_core_1.Token(sdk_core_1.ChainId.BASE_GOERLI, '0x853154e2A5604E5C74a2546E2871Ad44932eB92C', 6, 'USDbC', 'USD Base Coin');
  // Gnosis Tokens
 diff --git a/node_modules/@uniswap/smart-order-router/build/main/providers/v2/static-subgraph-provider.js b/node_modules/@uniswap/smart-order-router/build/main/providers/v2/static-subgraph-provider.js
-index 161d2b7..a0d5d4e 100644
+index 161d2b7..ff351ec 100644
 --- a/node_modules/@uniswap/smart-order-router/build/main/providers/v2/static-subgraph-provider.js
 +++ b/node_modules/@uniswap/smart-order-router/build/main/providers/v2/static-subgraph-provider.js
+@@ -20,7 +20,7 @@ const BASES_TO_CHECK_TRADES_AGAINST = {
+         token_provider_1.WSTETH_MAINNET,
+     ],
+     [sdk_core_1.ChainId.GOERLI]: [chains_1.WRAPPED_NATIVE_CURRENCY[sdk_core_1.ChainId.GOERLI]],
+-    [sdk_core_1.ChainId.SEPOLIA]: [chains_1.WRAPPED_NATIVE_CURRENCY[sdk_core_1.ChainId.SEPOLIA]],
++    [sdk_core_1.ChainId.SEPOLIA]: [chains_1.WRAPPED_NATIVE_CURRENCY[sdk_core_1.ChainId.SEPOLIA], token_provider_1.SELECT_SEPOLIA],
+     //v2 not deployed on [arbitrum, polygon, celo, gnosis, moonbeam, bnb, avalanche] and their testnets
+     [sdk_core_1.ChainId.OPTIMISM]: [
+         chains_1.WRAPPED_NATIVE_CURRENCY[sdk_core_1.ChainId.OPTIMISM],
 @@ -69,7 +69,7 @@ const BASES_TO_CHECK_TRADES_AGAINST = {
          token_provider_1.DAI_AVAX,
      ],
@@ -36,9 +71,18 @@ index 161d2b7..a0d5d4e 100644
      [sdk_core_1.ChainId.ZORA_SEPOLIA]: [chains_1.WRAPPED_NATIVE_CURRENCY[sdk_core_1.ChainId.ZORA_SEPOLIA]],
      [sdk_core_1.ChainId.ROOTSTOCK]: [chains_1.WRAPPED_NATIVE_CURRENCY[sdk_core_1.ChainId.ROOTSTOCK]],
 diff --git a/node_modules/@uniswap/smart-order-router/build/main/providers/v3/static-subgraph-provider.js b/node_modules/@uniswap/smart-order-router/build/main/providers/v3/static-subgraph-provider.js
-index 4ea87b9..deecb95 100644
+index 4ea87b9..66c2309 100644
 --- a/node_modules/@uniswap/smart-order-router/build/main/providers/v3/static-subgraph-provider.js
 +++ b/node_modules/@uniswap/smart-order-router/build/main/providers/v3/static-subgraph-provider.js
+@@ -29,7 +29,7 @@ const BASES_TO_CHECK_TRADES_AGAINST = {
+         token_provider_1.WBTC_GOERLI,
+         token_provider_1.DAI_GOERLI,
+     ],
+-    [sdk_core_1.ChainId.SEPOLIA]: [chains_1.WRAPPED_NATIVE_CURRENCY[sdk_core_1.ChainId.SEPOLIA], token_provider_1.USDC_SEPOLIA],
++    [sdk_core_1.ChainId.SEPOLIA]: [chains_1.WRAPPED_NATIVE_CURRENCY[sdk_core_1.ChainId.SEPOLIA], token_provider_1.USDC_SEPOLIA, token_provider_1.SELECT_SEPOLIA],
+     [sdk_core_1.ChainId.OPTIMISM]: [
+         chains_1.WRAPPED_NATIVE_CURRENCY[sdk_core_1.ChainId.OPTIMISM],
+         token_provider_1.USDC_OPTIMISM,
 @@ -104,7 +104,7 @@ const BASES_TO_CHECK_TRADES_AGAINST = {
          token_provider_1.WBTC_MOONBEAM,
      ],
@@ -65,10 +109,25 @@ index c1a8afe..d10e49d 100644
                  forceCrossProtocol: false,
              };
 diff --git a/node_modules/@uniswap/smart-order-router/build/main/routers/alpha-router/functions/get-candidate-pools.js b/node_modules/@uniswap/smart-order-router/build/main/routers/alpha-router/functions/get-candidate-pools.js
-index d73915b..0087536 100644
+index d73915b..9cbccd1 100644
 --- a/node_modules/@uniswap/smart-order-router/build/main/routers/alpha-router/functions/get-candidate-pools.js
 +++ b/node_modules/@uniswap/smart-order-router/build/main/routers/alpha-router/functions/get-candidate-pools.js
-@@ -69,7 +69,7 @@ const baseTokensByChain = {
+@@ -31,12 +31,13 @@ const baseTokensByChain = {
+         token_provider_1.USDT_OPTIMISM,
+         token_provider_1.WBTC_OPTIMISM,
+     ],
+-    [sdk_core_1.ChainId.SEPOLIA]: [token_provider_1.DAI_SEPOLIA, token_provider_1.USDC_SEPOLIA],
++    [sdk_core_1.ChainId.SEPOLIA]: [token_provider_1.DAI_SEPOLIA, token_provider_1.USDC_SEPOLIA, token_provider_1.WETH_SEPOLIA, token_provider_1.SELECT_SEPOLIA],
+     [sdk_core_1.ChainId.OPTIMISM_GOERLI]: [
+         token_provider_1.DAI_OPTIMISM_GOERLI,
+         token_provider_1.USDC_OPTIMISM_GOERLI,
+         token_provider_1.USDT_OPTIMISM_GOERLI,
+         token_provider_1.WBTC_OPTIMISM_GOERLI,
++        
+     ],
+     [sdk_core_1.ChainId.OPTIMISM_SEPOLIA]: [
+         providers_1.DAI_OPTIMISM_SEPOLIA,
+@@ -69,7 +70,7 @@ const baseTokensByChain = {
      ],
      [sdk_core_1.ChainId.BNB]: [token_provider_1.DAI_BNB, token_provider_1.USDC_BNB, token_provider_1.USDT_BNB],
      [sdk_core_1.ChainId.AVALANCHE]: [token_provider_1.DAI_AVAX, token_provider_1.USDC_AVAX],
@@ -78,9 +137,18 @@ index d73915b..0087536 100644
      [sdk_core_1.ChainId.ZORA]: [util_1.WRAPPED_NATIVE_CURRENCY[sdk_core_1.ChainId.ZORA]],
      [sdk_core_1.ChainId.ZKSYNC]: [util_1.WRAPPED_NATIVE_CURRENCY[sdk_core_1.ChainId.ZKSYNC]],
 diff --git a/node_modules/@uniswap/smart-order-router/build/main/routers/legacy-router/bases.js b/node_modules/@uniswap/smart-order-router/build/main/routers/legacy-router/bases.js
-index aa3b362..86ad3e7 100644
+index aa3b362..a133268 100644
 --- a/node_modules/@uniswap/smart-order-router/build/main/routers/legacy-router/bases.js
 +++ b/node_modules/@uniswap/smart-order-router/build/main/routers/legacy-router/bases.js
+@@ -15,7 +15,7 @@ const BASES_TO_CHECK_TRADES_AGAINST = (_tokenProvider) => {
+             token_provider_1.WBTC_MAINNET,
+         ],
+         [sdk_core_1.ChainId.GOERLI]: [chains_1.WRAPPED_NATIVE_CURRENCY[sdk_core_1.ChainId.GOERLI]],
+-        [sdk_core_1.ChainId.SEPOLIA]: [chains_1.WRAPPED_NATIVE_CURRENCY[sdk_core_1.ChainId.SEPOLIA]],
++        [sdk_core_1.ChainId.SEPOLIA]: [chains_1.WRAPPED_NATIVE_CURRENCY[sdk_core_1.ChainId.SEPOLIA], token_provider_1.SELECT_SEPOLIA],
+         [sdk_core_1.ChainId.OPTIMISM]: [chains_1.WRAPPED_NATIVE_CURRENCY[sdk_core_1.ChainId.OPTIMISM]],
+         [sdk_core_1.ChainId.OPTIMISM_GOERLI]: [
+             chains_1.WRAPPED_NATIVE_CURRENCY[sdk_core_1.ChainId.OPTIMISM_GOERLI],
 @@ -49,7 +49,7 @@ const BASES_TO_CHECK_TRADES_AGAINST = (_tokenProvider) => {
              token_provider_1.USDC_AVAX,
              token_provider_1.DAI_AVAX,
